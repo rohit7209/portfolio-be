@@ -22,6 +22,6 @@ fs.readdirSync(controllersPath)
     });
   });
 
-// console.log('dirs:', controllers);
+console.log('controllers:', controllers);
 
 module.exports = controllers;

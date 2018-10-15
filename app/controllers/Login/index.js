@@ -6,23 +6,27 @@ module.exports = (req, res) => {
   try {
     User.create(req.body)
       .then(() => {
-        res.status(200).send({
+        res({
           success: true,
+          httpStatus: 200,
           body: {},
         });
       })
       .catch(e => {
-        console.log(e.sql, e.name, e.original);
-        res.status(400).send({
+        // console.log(e.sql, e.name, e.original);
+        res({
           success: false,
+          httpStatus: 400,
           errno: e.original.errno,
           message: e.original.sqlMessage || 'Something went wrong 67!',
           body: {},
         });
       });
   } catch (err) {
-    res.status(400).send({
+    res({
       success: false,
+      httpStatus: 400,
+      errno: 'NA',
       message: 'Something went wrong',
       body: {},
     });

@@ -1,10 +1,10 @@
-"use strict";
+'use strict';
 
 const express = require('express');
 const app = express();
 const port = 8080;
 
-var bodyParser = require("body-parser");
+var bodyParser = require('body-parser');
 var cors = require('cors')
 
 app.use(cors());

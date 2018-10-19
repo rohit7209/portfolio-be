@@ -1,6 +1,7 @@
+'use strict';
 const User = require('./../../db').user;
 
-// const Login = require('./../../db').login;
+const Authenticate = require('./../../utils/Authenticate');
 
 const respondFailure = (res, e) => {
   res({
@@ -25,13 +26,22 @@ module.exports = (req, res) => {
         if (!user) respondFailure(res, { message: 'Wrong email/password!', httpStatus: 200 });
         else user.createLogin({
           status: 'logged in',
-          token: 'wuteu23764ctyrw78hbe7823eqe',
+          token: Authenticate.createToken({ id: user.id }),
         })
-          .then(() => {
+          .then((login) => {
             res({
               success: true,
               httpStatus: 200,
-              body: user,
+              body: {
+                id: user.id,
+                firstname: user.firstname,
+                lastname: user.lastname,
+                email: user.email,
+                phone: user.phone,
+                sex: user.sex,
+                city: user.city,
+                token: login.token,
+              },
             });
           })
           .catch((e) => respondFailure(res, e));

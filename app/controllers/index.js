@@ -11,7 +11,7 @@ fs.readdirSync(controllersPath)
     controllers[dir] = (req, res) => require(path.join(controllersPath, dir))(req, (response) => {
       if (response.success) res.status(response.httpStatus || 200).send({
         success: true,
-        body: response.body,
+        data: response.body,
       });
       else res.status(response.httpStatus || 400).send({
         success: false,
@@ -22,6 +22,6 @@ fs.readdirSync(controllersPath)
     });
   });
 
-console.log('controllers:', controllers);
+// console.log('controllers:', controllers);
 
 module.exports = controllers;

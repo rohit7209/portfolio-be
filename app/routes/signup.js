@@ -5,6 +5,6 @@ const Login = require('./../controllers').Login;
 const Signup = require('./../controllers').Signup;
 
 router.route('/')
-  .post(Login)
+  .post(Signup);
 
 module.exports = router;

@@ -44,15 +44,7 @@ module.exports = {
         allowNull: false,
         type: Sequelize.DATE
       }
-    },
-      {
-        indexes: [
-          {
-            unique: true,
-            fields: ['email']
-          }
-        ]
-      });
+    });
   },
   down: (queryInterface, Sequelize) => {
     return queryInterface.dropTable('users');

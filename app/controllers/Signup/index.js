@@ -1,34 +1,35 @@
 const User = require('./../../db').user;
 // const Login = require('./../../db').login;
+const respondFailure = (res, e) => {
+  res({
+    success: false,
+    httpStatus: 400,
+    errno: (e.original || {}).errno || 'NA',
+    message: (e.original || {}).sqlMessage || 'Something went wrong 67!',
+    body: {},
+  });
+}
 
 module.exports = (req, res) => {
-  let response;
   try {
     User.create(req.body)
-      .then(() => {
-        res({
-          success: true,
-          httpStatus: 200,
-          body: {},
-        });
+      .then(user => {
+        user.createLogin({
+          status: 'logged in',
+          token: req.body.token,
+        })
+          .then(() => {
+            console.log('Worked!')
+            res({
+              success: true,
+              httpStatus: 200,
+              body: {},
+            });
+          })
+          .catch((e) => respondFailure(res, e));
       })
-      .catch(e => {
-        // console.log(e.sql, e.name, e.original);
-        res({
-          success: false,
-          httpStatus: 400,
-          errno: e.original.errno,
-          message: e.original.sqlMessage || 'Something went wrong 67!',
-          body: {},
-        });
-      });
+      .catch((e) => respondFailure(res, e));
   } catch (err) {
-    res({
-      success: false,
-      httpStatus: 400,
-      errno: 'NA',
-      message: 'Something went wrong',
-      body: {},
-    });
+    respondFailure(res, e);
   }
 }

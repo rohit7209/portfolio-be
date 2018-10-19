@@ -10,6 +10,7 @@ var cors = require('cors')
 app.use(cors());
 app.use(bodyParser.json());
 app.use('/login', require('./app/routes/login'));
+app.use('/signup', require('./app/routes/signup'));
 
 // require('./app/routes')(app);
 

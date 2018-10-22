@@ -12,20 +12,24 @@ const respondFailure = (res, e) => {
 
 module.exports = (req, res) => {
   try {
-    setTimeout(() => {
-      SubscribedEmail.create({
+    SubscribedEmail.findOrCreate({
+      where: {
         status: 'active',
         email: req.body.email,
-      })
-        .then((email) => {
-          res({
-            success: true,
-            httpStatus: 200,
-            body: email,
-          });
-        })
-        .catch((e) => respondFailure(res, e));
-    }, 5000);
+      },
+      defaults: {
+        status: 'active',
+        email: req.body.email,
+      },
+    }).then((email) => {
+      res({
+        success: email[1],
+        message: email[1] ? 'Email added successfully!' : 'Email already exist',
+        httpStatus: 200,
+        body: email[0],
+      });
+    })
+      .catch((e) => respondFailure(res, e));
   } catch (err) {
     respondFailure(res, err);
   }

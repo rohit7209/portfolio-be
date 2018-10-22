@@ -11,6 +11,7 @@ fs.readdirSync(controllersPath)
     controllers[dir] = (req, res) => require(path.join(controllersPath, dir))(req, (response) => {
       if (response.success) res.status(response.httpStatus || 200).send({
         success: true,
+        message: response.message || 'Request successful',
         data: response.body,
       });
       else res.status(response.httpStatus || 400).send({

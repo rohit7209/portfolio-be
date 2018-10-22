@@ -9,9 +9,9 @@ var cors = require('cors')
 
 app.use(cors());
 app.use(bodyParser.json());
-app.use('/login', require('./app/routes/login'));
-app.use('/signup', require('./app/routes/signup'));
-app.use('/saveEmail', require('./app/routes/saveEmail'));
+app.use('/api/login', require('./app/routes/login'));
+app.use('/api/signup', require('./app/routes/signup'));
+app.use('/api/saveEmail', require('./app/routes/saveEmail'));
 
 // require('./app/routes')(app);
 
